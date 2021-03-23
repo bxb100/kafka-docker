@@ -2,18 +2,18 @@ FROM openjdk:8u212-jre-alpine
 
 ARG kafka_version=2.7.0
 ARG scala_version=2.13
-ARG glibc_version=2.31-r0
+ARG glibc_version=2.32-r0
 ARG vcs_ref=unspecified
 ARG build_date=unspecified
 
-LABEL org.label-schema.name="kafka" \
+LABEL org.label-schema.name="kafka arm64" \
       org.label-schema.description="Apache Kafka" \
       org.label-schema.build-date="${build_date}" \
-      org.label-schema.vcs-url="https://github.com/wurstmeister/kafka-docker" \
+      org.label-schema.vcs-url="https://github.com/bxb100/kafka-docker" \
       org.label-schema.vcs-ref="${vcs_ref}" \
       org.label-schema.version="${scala_version}_${kafka_version}" \
       org.label-schema.schema-version="1.0" \
-      maintainer="wurstmeister"
+      maintainer="bxb100"
 
 ENV KAFKA_VERSION=$kafka_version \
     SCALA_VERSION=$scala_version \
@@ -32,7 +32,7 @@ RUN apk add --no-cache bash curl jq docker \
  && rm /tmp/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz \
  && ln -s /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION} ${KAFKA_HOME} \
  && rm /tmp/* \
- && wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk \
+ && wget https://github.com/ljfranklin/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}-arm64/glibc-${GLIBC_VERSION}.apk \
  && apk add --no-cache --allow-untrusted glibc-${GLIBC_VERSION}.apk \
  && rm glibc-${GLIBC_VERSION}.apk
 

@@ -15,7 +15,7 @@ FILENAME="kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz"
 #fi
 
 # In China anhui tsinghua mirror cant download
-url="https://mirrors.bfsu.edu.cn/apache/kafka/${KAFKA_VERSION}/${FILENAME}"
+url="https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/${FILENAME}"
 
 echo "Downloading Kafka from $url"
 wget "${url}" -O "/tmp/${FILENAME}"

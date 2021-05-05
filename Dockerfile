@@ -1,6 +1,6 @@
-FROM arm64v8/openjdk:8-jre-alpine
+FROM openjdk:8-jre-alpine3.9
 
-ARG kafka_version=2.0.1
+ARG kafka_version=2.1.1
 ARG scala_version=2.12
 ARG glibc_version=2.32-r0
 ARG vcs_ref=unspecified
@@ -39,6 +39,11 @@ RUN apk add --no-cache bash curl jq docker \
 COPY overrides /opt/overrides
 
 VOLUME ["/kafka"]
+
+# tone down the JVM to run better on RASPI
+ENV KAFKA_HEAP_OPTS -Xmx256M\ -Xms256M
+# Zulu embedded doesn't support the G1 compiler and other options set by default - These are a bit more reasonable
+ENV KAFKA_JVM_PERFORMANCE_OPTS -server\ -XX:+DisableExplicitGC\ -Djava.awt.headless=true
 
 # Use "exec" form so that it runs as PID 1 (useful for graceful shutdown)
 CMD ["start-kafka.sh"]
